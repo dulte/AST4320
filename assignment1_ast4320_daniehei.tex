@@ -1,0 +1,261 @@
+\documentclass[a4paper,norsk, 10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage[norsk]{babel}
+\usepackage{a4wide}
+\usepackage{color}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{amssymb}
+\usepackage[dvips]{epsfig}
+\usepackage[toc,page]{appendix}
+\usepackage[T1]{fontenc}
+\usepackage{cite} % [2,3,4] --> [2--4]
+\usepackage{shadow}
+\usepackage{hyperref}
+\usepackage{titling}
+\usepackage{marvosym }
+\usepackage{subcaption}
+\usepackage[noabbrev]{cleveref}
+\usepackage{cite}
+
+
+\setlength{\droptitle}{-10em}   % This is your set screw
+
+\setcounter{tocdepth}{2}
+
+\lstset{language=c++}
+\lstset{alsolanguage=[90]Fortran}
+\lstset{alsolanguage=Python}
+\lstset{basicstyle=\small}
+\lstset{backgroundcolor=\color{white}}
+\lstset{frame=single}
+\lstset{stringstyle=\ttfamily}
+\lstset{keywordstyle=\color{red}\bfseries}
+\lstset{commentstyle=\itshape\color{blue}}
+\lstset{showspaces=false}
+\lstset{showstringspaces=false}
+\lstset{showtabs=false}
+\lstset{breaklines}
+\title{AST4320 Assignment 1}
+\author{Daniel Heinesen, daniehei}
+\begin{document}
+\maketitle
+
+\section{Exercise 1}
+\subsection{a)}
+We have the continuity equation
+\begin{equation}
+\frac{d\rho_0}{dt} + \rho_0 \nabla \cdot \mathbf{v} = \frac{\partial\rho_0}{\partial t} + \mathbf{v}\cdot \nabla \rho_0 + \rho_0 \nabla \cdot \mathbf{v} = 0.
+\end{equation}
+Since we have homogeneous universe model, we see that $\nabla \rho \approx 0$, so we get
+\begin{equation}
+\frac{\partial\rho_0}{\partial t} + \rho_0 \nabla \cdot \mathbf{v} = 0.
+\end{equation}
+We are assuming a universe that follows Hubble's law $\mathbf{v} = H\mathbf{r} = \frac{\dot{a}}{a}\mathbf{r}$. Since we are in a spherical universe, with a velocity that only depends on the radial direction, we get a divergence of the following form
+\begin{equation}
+\nabla \cdot \mathbf{v} = \frac{1}{r^2}\frac{\partial (r^2 \cdot v_r)}{\partial r} = \frac{1}{r^2}\frac{\partial (r^3)}{\partial r} = 3,
+\end{equation}
+which gives us the following for the continuity equation
+\begin{equation}
+\frac{\partial\rho_0}{\partial t} + 3\frac{\dot{a}}{a}\rho_0 = 0 \Leftrightarrow \frac{d\rho_0}{\rho_0} = -3 \frac{da}{a}.
+\end{equation}
+Integrating on both sides from $\rho_0(t=t_0) \rightarrow \rho(t)$ and $a_0 = 1 \rightarrow a$ we get
+\begin{equation}
+\ln \frac{\rho}{\rho_0} = \ln a^{-3} \Leftrightarrow \rho_0(t) = \rho_0(t=t_0)a^{-3}.
+\end{equation}
+\subsection{b)}
+We have the Euler and Poisson equation with the permutations
+\begin{equation}
+\rho = \bar{\rho} + \delta \rho, \quad \phi = \phi_0 + \delta \phi, \quad v = v_0 + \delta v, \quad p = p_0 + \delta p, \quad \delta = \frac{\delta \rho}{\bar{\rho}}.
+\end{equation}
+Note that the velocities are vector quantities, but for brevity I have omitted writing them as such here.
+\subsubsection{i)}
+We start with the Euler equation
+\begin{equation}
+\frac{dv}{dt} = - \frac{1}{\rho}\nabla p - \nabla \phi.
+\end{equation}
+We start with the LHS:
+\begin{equation}
+\frac{dv}{dt} = \frac{\partial v}{\partial t} + v\cdot \nabla v = \frac{\partial v_0 + \delta v}{\partial t} + (v_0 + \delta v)\cdot \nabla (v_0 + \delta v)
+\end{equation}
+\begin{equation}
+= \frac{\partial v_0}{\partial t} + \frac{\partial \delta v}{\partial t} + v_0\cdot \nabla v_0 + \delta v\cdot \nabla v_0 + v_0\cdot \nabla \delta v + \delta v\cdot \nabla \delta v
+\end{equation}
+\begin{equation}
+= \frac{d \delta v}{dt} + \frac{d v_0}{dt} + \delta v \cdot \nabla v.
+\end{equation}
+In the last step we use that the product of two infinitesimals are more or less zero, and the definition of total derivatives. We can then move on to the RHS:
+\begin{equation}
+-\frac{1}{\rho}\nabla p - \nabla \phi = -\frac{1}{\bar{\rho} + \delta \rho}\nabla (p_0 + \delta p) - \nabla (\phi_0 + \delta \phi)
+\end{equation}
+\begin{equation}
+= -\frac{1}{\bar{\rho}}\frac{1}{1+\frac{\delta\rho}{\rho_0}}\left(\nabla p_0 + \nabla \delta p\right) - \nabla \phi_0 - \nabla \delta \phi
+\end{equation}
+\begin{equation}
+= -\frac{1}{\bar{\rho}}\nabla p_0 -\frac{1}{\bar{\rho}}\nabla \delta p - \nabla \phi_0 - \nabla \delta \phi.
+\end{equation}
+In the last step we used that $\delta \rho / \rho_0 << 1$ so that $1/(1+\delta \rho / \rho_0) \approx 1$. Putting all this together, we get
+\begin{equation}
+\frac{d \delta v}{dt} + \frac{d v_0}{dt} + \delta v \cdot \nabla v. = -\frac{1}{\bar{\rho}}\nabla p_0 -\frac{1}{\bar{\rho}}\nabla \delta p - \nabla \phi_0 - \nabla \delta \phi.
+\end{equation}
+Knowing that $v_0$, $p_0$, $\bar{\rho}$ and $\phi_0$ have to follow the Euler equation, we can remove half of the term, leaving us with
+\begin{equation}
+\frac{d \delta v}{dt} + \delta v \cdot \nabla v. =  -\frac{1}{\bar{\rho}}\nabla \delta p  - \nabla \delta \phi.
+\end{equation}
+
+
+
+\subsubsection{ii)}
+We can now look at the Poisson equation:
+\begin{equation}
+\nabla^2 \phi = 4\pi G\rho.
+\end{equation}
+Inserting the perturbations we get
+\begin{equation}
+\nabla^2 (\phi_0 + \delta \phi_0) = 4\pi G(\bar{\rho} + \delta \rho)
+\end{equation}
+\begin{equation}
+\Rightarrow \nabla^2 \phi_0 + \nabla^2\delta \phi_0 = 4\pi G\bar{\rho} + 4\pi G\delta \rho.
+\end{equation}
+And knowing that $\phi_0$ and $\bar{\rho}$ have to follow the Poisson equation and can be removed, we get
+\begin{equation}
+\nabla^2 \delta\phi = 4\pi G \delta\rho.
+\end{equation}
+
+
+
+\section{Exercise 2}
+\subsection{a)}
+We want to find expressions for $H = \dot{a}/a$. We start with the expression when $(\Omega_{m},\Omega_{\Lambda}) = (1,0)$. We know from the lecture notes that this gives
+\begin{equation}\label{eq:o_m=1}
+H = 2/3t.
+\end{equation}
+For the next two combinations, we need to solve the differential equation
+\begin{equation}\label{eq:H^2}
+H^2 = H_0^2\left[\frac{\Omega_{m}}{a^{-3}} + \Omega_{\Lambda}\right].
+\end{equation}
+We can solve this generally. The solution to this differential equation is
+\begin{equation}
+a(t) = a_0\left(\frac{\Omega_{m}}{\Omega_{\Lambda}}\right)^{1/3}\left[\sinh\left(\frac{3}{2}\sqrt{\Omega_{\Lambda}}H_0 t\right)\right]^{2/3},
+\end{equation} 
+which gives us
+\begin{equation}\label{o_m<1}
+\frac{\dot{a}}{a} = \sqrt{\Omega_{\Lambda}}H_0 t\cosh\left(\frac{3}{2}\sqrt{\Omega_{\Lambda}}H_0 t\right)\left[\sinh\left(\frac{3}{2}\sqrt{\Omega_{\Lambda}}H_0 t\right)\right]^{1/3}.
+\end{equation}
+We can just use $(\Omega_{m},\Omega_{\Lambda}) = (0.3,0.7)$ and $(\Omega_{m},\Omega_{\Lambda}) = (0.8,0.2)$ as input here and get the appropriate $H = \dot{a}/a$.
+
+
+\subsection{b)}
+
+\section{Exercise 4}
+
+
+
+We have the differential equation 
+\begin{equation}\label{eq:Rdotdot}
+\ddot{R} = -\frac{GM}{R^2},
+\end{equation}
+and the parametric solutions 
+\begin{equation}\label{eq:param}
+R = A(1-\cos \theta), \quad t = B(\theta - \sin \theta), \quad A^3 = GMB^2.
+\end{equation}
+We start with eq. \eqref{eq:Rdotdot}, and multiply both sides with $dR/dt$
+\begin{equation}
+\frac{dR}{dt}\cdot \frac{d^2R}{dt^2} = - \frac{dR}{dt}\frac{GM}{R^2} \Leftrightarrow \frac{1}{2}\frac{d}{dt}\left(\frac{dR}{dt}\right) = \frac{d}{dt}\left(\frac{GM}{R}\right).
+\end{equation}
+Integrating on both sides gives us
+\begin{equation}\label{eq:E}
+\frac{1}{2}\left(\frac{dR}{dt}\right)^2 - \frac{GM}{R} = E,
+\end{equation}
+where $E$ is a constant (total energy). We are going to assume that $R$ and $t$ from \eqref{eq:param} are partially solutions to this differential equation. If this is correct, we should retrieve the relation between $A$ and $B$. Let us start be noting that
+\begin{equation}\label{eq:dRdt}
+\frac{dR}{dt} = \frac{dR}{d\theta}\frac{d\theta}{dt} = \frac{dR}{d\theta}\left(\frac{dt}{d\theta}\right)^{-1} = \frac{A\sin \theta}{B(1-\cos \theta)}.
+\end{equation}
+We then see that \eqref{eq:E} becomes
+\begin{equation}\label{eq:E_param}
+\frac{1}{2}\frac{A^2}{B^2}\frac{\sin^2 \theta}{(1-\cos \theta)^2} - \frac{GM}{A(1-\cos \theta)} = E.
+\end{equation}
+$E$ is constant, so it has the same value for all values of $\theta$. So to find its value, we choose to check it at $\theta = \pi$, with gives $\sin \theta = 0$ and $\cos \theta = -1$
+\begin{equation}
+E = 0 - \frac{GM}{A(1+1)} = -\frac{GM}{2A}.
+\end{equation}
+We can now input this into eq. \eqref{eq:E} to get
+\begin{equation}
+\frac{1}{2}\frac{A^2}{B^2}\frac{\sin^2 \theta}{(1-\cos \theta)^2} - \frac{GM}{A(1-\cos \theta)} = -\frac{GM}{2A}
+\end{equation}
+\begin{equation}
+\Rightarrow \frac{1}{2}\frac{A^2}{B^2}\frac{\sin^2 \theta}{(1-\cos \theta)^2} = -\frac{GM}{2A}\left(1 - \frac{2}{1-\cos \theta)}\right).
+\end{equation}
+Then note that
+\begin{equation}
+\frac{\sin^2 \theta}{(1-\cos \theta)^2} = - \left(1 - \frac{2}{1-\cos \theta)}\right) = \cot^2\left(\frac{\theta}{2}\right),
+\end{equation}
+which gives us
+\begin{equation}
+\frac{A^2}{B^2} = \frac{GM}{A} \Leftrightarrow A^3 = GMB^2.
+\end{equation}
+This retrieves the relation from eq. \eqref{eq:param}. This means that the parameterized equations are solutions to \eqref{eq:E} which again means they are solutions to \eqref{eq:Rdotdot}.
+
+\section{Exercise 5}
+From the definition of $v$ and what we calculated in \eqref{eq:dRdt}, we see that
+\begin{equation}
+v = \frac{dR}{dt} = \frac{A\sin\theta}{B(1-\cos \theta)} \Rightarrow v^2 = \frac{A^2}{B^2}\frac{\sin^2 \theta}{(1-\cos \theta)^2}.
+\end{equation}
+The last step is just to make it easier later. We want to find to find the velocity at the virial radius, which we know is $R_{vir} = 0.5R_{max}$. For the parameterized solution, we know that $R_{max} = 2A$, which gives $R_{vir} = A$. From the definition of $R$ we get that
+\begin{equation}
+R = A(1-\cos \theta) = A \Rightarrow \theta = \pi \text{ or } \frac{3\pi}{2}. 
+\end{equation}
+Since the virialization don't happen before $R_{max}$ we must have that
+\begin{equation}
+\pi_{vir} = \frac{3\pi}{2}.
+\end{equation}
+This gives us $\sin \theta = 1$, so we get
+\begin{equation}
+v^2 = \frac{A^2}{B^2} = \frac{A^2}{\frac{A^3}{GM}} = \frac{GM}{A}.
+\end{equation}
+We know that $R_{vir} = A$, so we get out answer
+\begin{equation}
+v_{infall} = \sqrt{\frac{GM}{R_{vir}}}
+\end{equation}
+
+\section{Exercise 6}
+The gravitational binding energy is found in the following way\footnote{To not be called out on plagiarism, this derivation is heavily inspired by/stolen from \url{https://en.wikipedia.org/wiki/Gravitational_binding_energy} and \url{http://scienceworld.wolfram.com/physics/SphereGravitationalPotentialEnergy.html}}:
+
+The energy needed to escape from a system is the same as peeling away all the mass of the system, layer by layer and letting them go to infinity. The energy required to do this is the binding energy. So the energy of peeling one layer is thus given as
+\begin{equation}
+dU = - G\frac{m_{shell}m_{interior}}{r}.
+\end{equation}
+The mass that resides in the interior under the shell, is simply that of a sphere
+\begin{equation}
+m_{interior} = \frac{4}{3}\pi r^3 \rho.
+\end{equation}
+The shell has a volume equal to that of the area of a sphere times the infinitesimal thickness of said shell. This gives us the mass
+\begin{equation}
+m_{mass} = 4\pi r^2\rho dr.
+\end{equation}
+These give us
+\begin{equation}
+dU = - G\frac{\frac{4}{3}\pi r^3 \rho\cdot 4\pi r^2\rho dr}{r} = -G\frac{16}{3}\pi^2\rho^2 r^4 dr.
+\end{equation}
+To get the total energy, we simply integrate from $r=0$ to the edge of the mass $r=R$
+\begin{equation}
+U = -\frac{16}{3}G\pi^2\rho^2 \int_0^R r^4 dr = -\frac{16}{15}G\pi^2\rho^2 R^5.
+\end{equation}
+For a uniform sphere with radius $R$, the density $\rho$ is simply given as
+\begin{equation}
+\rho = \frac{M}{4/3 \pi R^3}.
+\end{equation}
+This gives us the binding energy
+\begin{equation}
+U = -\frac{3GM^2}{5R}.
+\end{equation}
+
+
+
+
+\end{document}
+
+
