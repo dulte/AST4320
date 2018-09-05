@@ -1,11 +1,14 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy import constants,stats
-from scipy.integrate import ode
+from matplotlib import rc
+from scipy import constants
+
+rc('font',**{'family':'serif'})
+
 
 def H(omega_m,omega_l,t,H0,a):
 
-    return H0*np.sqrt(omega_m*a**(-3)+omega_l*a)
+    return H0*np.sqrt(omega_m*a**(-3)+omega_l)
 
     if omega_m == 1:
         return 2/(3*t)
@@ -41,17 +44,6 @@ def dxdt(omega_m,omega_l,a,t,H0,delta,x):
     rho0 = 3*H0**2/(8*np.pi*G)
     return delta*4*np.pi*rho0*a**(-3)*G - 2*H_*x
 
-def ddeltadt(x):
-    return x
-
-def delta_step(t,delta,args):
-    x = args[0]
-    return ddeltadt(x)
-def x_step(t,delta,args):
-    omega_m,omega_l,a,H0,x = args[0],args[1], args[2],args[3],args[4]
-    return dxdt(omega_m,omega_l,a,t,H0,delta,x)
-
-
 def solve(omega_m,omega_l,delta0,a0,steps,H0):
     t_array = np.linspace(t(omega_m,omega_l,a0,H0),t(omega_m,omega_l,1,H0),steps)
     a_array = a(omega_m,omega_l,t_array,H0)
@@ -59,55 +51,42 @@ def solve(omega_m,omega_l,delta0,a0,steps,H0):
     delta_array[0] = delta0
     x_array = np.zeros_like(a_array)
     x_array[0] = a_dot(omega_m,omega_l,t_array[0],H0,a_array[0])
-
     dt = t_array[1]-t_array[0]
-
-
 
 
     for i in range(steps-1):
 
         dx = dxdt(omega_m,omega_l,a_array[i],t_array[i],H0,delta_array[i],x_array[i])*dt
         x_array[i+1] = x_array[i] + dx
-        ddelta = x_array[i]*dt
+        ddelta = x_array[i+1]*dt
         delta_array[i+1] = delta_array[i] + ddelta
         if delta_array[i+1] != delta_array[i+1]:
             break
 
-
-
-    """
-    r_delta = ode(delta_step).set_integrator('lsoda', method='bdf')
-    r_delta.set_initial_value(delta_array[0],t_array[0]).set_f_params([x_array[0]])
-
-    r_x = ode(x_step).set_integrator('lsoda', method='bdf')
-    r_x.set_initial_value(x_array[0],t_array[0]).set_f_params([omega_m,omega_l,a_array[0],H0,x_array[0]])
-    i = 0
-
-    while r_delta.successful() and r_x.successful() and r_delta.t <= t_array[-1]:
-        r_x.set_f_params([omega_m,omega_l,a_array[i],H0,x_array[i]])
-
-        x_array[i+1] = r_x.integrate(r_x.t + dt)[0]
-
-        r_delta.set_f_params([x_array[i+1]])
-        delta_array[i+1] = r_delta.integrate(r_delta.t + dt)[0]
-
-    """
     return delta_array,a_array
 
-def find_power(delta,a):
-    pass
 
 if __name__ == '__main__':
-    omega_m = 1.
-    omega_l = .0
+
     H0 = 2e-18
     delta0 = 1e-3
     a0 = 1e-3
 
-    steps = int(1e6)
+    steps = int(1e5)
 
-    delta,a = solve(omega_m,omega_l,delta0,a0,steps,H0)
-    print(delta)
-    plt.loglog(a,delta)
+
+    omega_ms = [1,0.3,0.8]
+
+    for omega_m in omega_ms:
+        omega_l = 1- omega_m
+        print(omega_m,omega_l)
+        delta_sol,a_sol = solve(omega_m,omega_l,delta0,a0,steps,H0)
+
+        plt.loglog(a_sol,delta_sol,label=r"$\Omega_m=$%.1f,$\Omega_{\Lambda}=$%.1f"%(omega_m,omega_l))
+        print("Done with omega_m=%s"%omega_m)
+
+    plt.title(r"Density Contrast $\delta$ for Three Different Universes",fontsize=20)
+    plt.xlabel("a",fontsize=15)
+    plt.ylabel(r"$\delta$",fontsize=15)
+    plt.legend(loc="best")
     plt.show()
