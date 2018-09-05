@@ -10,13 +10,13 @@ def H(omega_m,omega_l,H0,a):
     return H0*np.sqrt(omega_m*a**(-3)+omega_l)
 
 def a_dot(omega_m,omega_l,H0,a):
-    return H0*np.sqrt(omega_m*a**(-1)+omega_l*a**(2))
+    return H0*np.sqrt(omega_m*a**(-1)+omega_l*a**2)
 
 
 def dxdt(omega_m,omega_l,a,H0,delta,x):
 
     H_ = H(omega_m,omega_l,H0,a)
-    return delta*3/2.*H0**2*a**(-3)- 2*H_*x
+    return delta*3/2.*H0**2*(omega_m*a**(-3)+omega_l) - 2*H_*x
 
 
 def solve(omega_m,omega_l,delta0,a0,steps,H0):
@@ -26,7 +26,7 @@ def solve(omega_m,omega_l,delta0,a0,steps,H0):
     delta_array[0] = delta0
     x_array = np.zeros_like(a_array)
     x_array[0] = a_dot(omega_m,omega_l,H0,a_array[0])
-    da = a_array[1]-a_array[0]
+    da = abs(a_array[1]-a_array[0])
 
 
     for i in range(steps-1):
