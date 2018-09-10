@@ -3,6 +3,13 @@ import matplotlib.pyplot as plt
 from matplotlib import rc
 from scipy import constants
 
+try:
+    import seaborn as sns
+    sns.set_style("darkgrid")
+except:
+    print("Everything Looks Nicer With Seaborn!")
+
+
 rc('font',**{'family':'serif'})
 
 
@@ -38,7 +45,11 @@ def solve(omega_m,omega_l,delta0,a0,steps,H0):
         if delta_array[i+1] != delta_array[i+1]:
             break
 
-    return delta_array,a_array
+    return delta_array,a_array, x_array
+
+def getF(delta,a):
+    return (np.log(delta[1:]/delta[:-1]))/(np.log(a[1:]/a[:-1]))
+    return a[1:]/delta[1:]*((delta[1:]-delta[:-1])/(a[1:]-a[:-1]))
 
 
 if __name__ == '__main__':
@@ -51,17 +62,36 @@ if __name__ == '__main__':
 
 
     omega_ms = [1,0.3,0.8]
-
+    fs = []
+    a_sols = []
     for omega_m in omega_ms:
         omega_l = 1- omega_m
         print(omega_m,omega_l)
-        delta_sol,a_sol = solve(omega_m,omega_l,delta0,a0,steps,H0)
+        delta_sol,a_sol,delta_dot_sol = solve(omega_m,omega_l,delta0,a0,steps,H0)
 
+        a_sols.append(a_sol)
+        fs.append(getF(delta_sol,a_sol))
         plt.loglog(a_sol,delta_sol,label=r"$\Omega_m=$%.1f,$\Omega_{\Lambda}=$%.1f"%(omega_m,omega_l))
         print("Done with omega_m=%s"%omega_m)
 
     plt.title(r"Density Contrast $\delta$ for Three Different Universes",fontsize=20)
     plt.xlabel("a",fontsize=15)
     plt.ylabel(r"$\delta$",fontsize=15)
-    plt.legend(loc="best")
+    plt.legend(loc="best",fontsize=15)
+    plt.show()
+
+
+    for i,f in enumerate(fs):
+
+        omega_m = omega_ms[i]
+        omega_l = 1-omega_m
+        z = 1./a_sols[i][1:] -1
+        plt.loglog(z,f,label=r"$\Omega_m=$%.1f,$\Omega_{\Lambda}=$%.1f"%(omega_m,omega_l))
+
+    plt.title(r"Growth Factor $f$ for Three Different Universes",fontsize=20)
+    plt.xlabel("z",fontsize=15)
+    plt.ylabel(r"f",fontsize=15)
+    plt.legend(loc="best",fontsize=15)
+    plt.ylim(0,1.1)
+    plt.xlim(z[0],z[-1])
     plt.show()

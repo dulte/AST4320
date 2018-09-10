@@ -138,7 +138,7 @@ For the next two combinations, we need to solve the differential equation
 H^2 = H_0^2\left[{\Omega_{m}}{a^{-3}} + \Omega_{\Lambda}\right].
 \end{equation}
 Knowing that $H=\dot{a}/a$ we get
-\begin{equation}
+\begin{equation}\label{eq:a_dot}
 \dot{a} = H_0\sqrt{\left({\Omega_{m}}{a^{-3}} + \Omega_{\Lambda}\right)}a.
 \end{equation}
 \begin{equation}
@@ -160,6 +160,105 @@ We can just use $(\Omega_{m},\Omega_{\Lambda}) = (0.3,0.7)$ and $(\Omega_{m},\Om
 
 
 \subsection{b)}
+We have to solve 
+\begin{equation}
+\frac{d^2 \delta}{dt^2} + 2H\frac{d\delta}{dt} = 4\pi G \rho \delta,
+\end{equation}
+or in a simpler notation
+\begin{equation}
+\delta '' + 2H \delta ' = \delta 4\pi G\rho \delta = \frac{3}{2}\delta H^2,
+\end{equation}
+where the last term comes from the fact that $\rho = 3H^2/8\pi G$. To solve this we need to transform it to a system of first order differential equation. We thus introduce
+\begin{equation}
+x = \delta',
+\end{equation}
+which gives us
+\begin{equation}
+x' = \frac{3}{2}\delta H^2 - 2Hx.
+\end{equation}
+
+Using a simple \textit{Euler-Chromer} scheme, we can solve this iterative as
+
+\begin{equation}
+x_{i+1} = x_{i} + \left(\frac{3}{2}\delta H^2 - 2Hx\right)\cdot dt
+\end{equation}
+\begin{equation}
+\delta_{i+1} = \delta_{i} + \delta ' \cdot dt = \delta_{i} + x_{i+1} \cdot dt.
+\end{equation}
+
+We also want to change the integration variable to $a$. We can do this by observing that
+\begin{equation}
+dt = \frac{da}{\dot{a}}.
+\end{equation}
+Using this we can get an integration only dependent on $a$. The only quantities we need are $H$ and $\dot{a}$. These are simply calculated from \eqref{eq:H^2} and \eqref{eq:a_dot}, which are dependent only on $a$ as well.
+
+We are given boundary conditions for $\delta$ and $a$, but need one for $x = \delta '$. We are given that $\delta \propto a$ in the early universe, so we simply use $\delta' = \dot{a}$ as the initial condition.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.25]{a_v_delta}
+\caption{The evolution of the density contrast for three different universe models with only matter and a cosmological constant.}\label{fig:a_v_delta}
+\end{figure}
+
+
+We see from \ref{fig:a_v_delta} that for $(1,0)$ we have a linear function, which makes sense since we know that in this universe $\delta \propto a$. For the other two universes we see that $\delta \propto a$ for most of the time. This is due to matter being dominant in the early universe. But later the the cosmological constant takes over, and we get a more rapid expansion. Due to the rapid expansion of $\Lambda$ structures will have a more difficult time forming, and will more likely be torn apart. We therefore see that $\delta$ decreases. The larger $\Omega_{\Lambda}$ is the more expansion there will be, and $\delta$ will decrease faster.
+
+\subsection{c)}
+We now want to find the grown factor 
+\begin{equation}\label{eq:f}
+f = \frac{\ln \delta}{\ln a}.
+\end{equation}
+Since we have $\delta$ and $a$, we can approximate this numerically as
+\begin{equation}
+f_{i+1} \approx \frac{\Delta \ln \delta}{\Delta \ln a} = \frac{\ln \delta_{i+1} - \ln \delta_{i}}{\ln a_{i+1} - \ln a_{i}} = \frac{\ln \frac{\delta_{i+1}}{\delta_{i}}}{\ln \frac{a_{i+1}}{a_{i}}}.
+\end{equation}
+This is straight forward to calculate. We can then plot it against the redshift
+\begin{equation}
+z = \frac{1}{a} - 1.
+\end{equation}
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.25]{z_v_f}
+\caption{The evolution of the growth factor for three different universe models with only matter and a cosmological constant.}\label{fig:z_v_f}
+\end{figure}
+
+As we see from \ref{fig:z_v_f} the growth factor for the $\Omega_{m} = 1$ universe is more or less flat at $f = 0$. The two other models again follows this at the early stages, but decreases for lower $z$, with the model with highest $\Omega_{\Lambda}$ decreasing most.
+
+\section{Exercise 3}
+\subsection{a)}
+We start with the temperature for the gas. Since we have a adiabatic expansion, we start with an adiabatic expression for the temperature and volume of a gas
+\begin{equation}
+TV^{\gamma - 1} = C,
+\end{equation}
+where $T$ is the temperature, $V$ the volume, $C$ a constant and $\gamma$ is the degrees of freedom, given for a monoatomic gas as $\gamma = 5/3$. We also know that the volume has to be $V \propto a^{3}$, so
+\begin{equation}
+T_{gas} = \frac{C'}{(a^3)^{5/3 - 1}} = C'a^{-2}.
+\end{equation}
+($C'$ is some constant). 
+
+For the gas we start with Wien's displacement law for a black body
+\begin{equation}
+T = \frac{b}{\lambda},
+\end{equation}
+where $\lambda$ is the wavelength and $b$ a constant (it's value is known, but uninteresting here). We know that $\lambda \propto a$ so
+\begin{equation}
+T_{\gamma} = Ba^{-1}.
+\end{equation}
+
+We know that at the point of decoupling, the temperature must have been the same. This happen at $z = 1100 \Rightarrow a \approx 10^{-3}$ with the temperature $T = 4000K$. Using this we find the constants for the temperatures, and find the temperatures evolves like
+\begin{equation}
+T_{gas} = 4\cdot 10^{-3}a^{-2}, \quad T_{\gamma} = 4a^{-1}.
+\end{equation}
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.25]{temp}
+\caption{The evolution of the temperature of the gas and photons found in the universe.}\label{fig:temp}
+\end{figure}
+
+We see from \ref{fig:temp} that the temperature were the same at decoupling. After decoupling the temperature of the gas decrease much faster due to its dependence on $a^{-2}$, with the photons decreasing less to their dependence on $a^{-1}$. 
+
 
 \section{Exercise 4}
 
