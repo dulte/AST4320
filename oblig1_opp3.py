@@ -36,13 +36,14 @@ def jeans_length(z,type_):
     G = constants.G
     c = np.zeros_like(z)
     c = np.where(z>1100,sound_speed(z,"photons"),sound_speed(z,type_))
-    """
-    if z>=1100:
-        c = sound_speed(z,"photons")
-    else:
-        c = sound_speed(z,type_)
-    """
     return c*np.sqrt(np.pi/(G*density(z)))
+
+def jeans_mass(z):
+    G = constants.G
+    rho = density(z)
+    c = np.where(z>1100,sound_speed(z,"photons"),sound_speed(z,"gas"))
+    return (np.pi)**(2./5)/6.*c**3/(G**(3./2)*rho**(1/2.))
+
 
 if __name__ == '__main__':
     #a)
@@ -58,10 +59,13 @@ if __name__ == '__main__':
     """
     #b)
     z = np.linspace(2000,0,10000)
-    jeans_length_photons = jeans_length(z,"photons")
     jeans_length_gas = jeans_length(z,"gas")
-    plt.loglog(z,jeans_length_photons,label="Photons")
+    jeans_mass = jeans_mass(z)
     plt.loglog(z,jeans_length_gas,label="Gas")
     plt.legend()
+    plt.xlim(z[0],z[-1])
+    plt.show()
+    plt.loglog(z,jeans_mass)
+
     plt.xlim(z[0],z[-1])
     plt.show()
