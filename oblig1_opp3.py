@@ -11,7 +11,8 @@ except:
 def T_photon(a):
     return 4*1./a
 def T_gas(a):
-    return 4e-3*1./a**(2)
+    T = np.where(a<1./(1100+1),T_photon(a),4e-3*1./a**(2))
+    return T
 
 def sound_speed(z,type_):
     c = constants.c
@@ -26,7 +27,7 @@ def sound_speed(z,type_):
 def density(z):
     G = constants.G
     a = 1./(z+1)
-    H = 2e-18*np.sqrt(0.3*a**(-3)+0.7)
+    H = 2e-18*np.sqrt(0.3*a**(-3))#+0.7)
     rho = 3*H**2/(8*np.pi*G)
     return rho
 
@@ -47,7 +48,7 @@ def jeans_mass(z):
 
 if __name__ == '__main__':
     #a)
-    """
+
     a = np.linspace(1e-4,1,1000)
     plt.loglog(a,T_photon(a),label="Photons")
     plt.loglog(a,T_gas(a),label="Gas")
@@ -56,16 +57,22 @@ if __name__ == '__main__':
     plt.ylabel("T [K]",fontsize=15)
     plt.legend(loc="best",fontsize=15)
     plt.show()
-    """
+
     #b)
     z = np.linspace(2000,0,10000)
     jeans_length_gas = jeans_length(z,"gas")
     jeans_mass = jeans_mass(z)
-    plt.loglog(z,jeans_length_gas,label="Gas")
-    plt.legend()
+    plt.loglog(z,jeans_length_gas)
     plt.xlim(z[0],z[-1])
+    plt.title("Jeans Length Before and After Decoupling",fontsize=20)
+    plt.xlabel("z",fontsize=15)
+    plt.ylabel(r"$\lambda_J$",fontsize=15)
     plt.show()
-    plt.loglog(z,jeans_mass)
 
+
+    plt.loglog(z,jeans_mass)
+    plt.title("Jeans Mass Before and After Decoupling",fontsize=20)
+    plt.xlabel("z",fontsize=15)
+    plt.ylabel(r"$M_J$",fontsize=15)
     plt.xlim(z[0],z[-1])
     plt.show()

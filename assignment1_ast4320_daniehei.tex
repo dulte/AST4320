@@ -17,7 +17,8 @@
 \usepackage{hyperref}
 \usepackage{titling}
 \usepackage{marvosym }
-\usepackage{subcaption}
+%\usepackage{subcaption}
+\usepackage{subfig}
 \usepackage[noabbrev]{cleveref}
 \usepackage{cite}
 
@@ -257,7 +258,44 @@ T_{gas} = 4\cdot 10^{-3}a^{-2}, \quad T_{\gamma} = 4a^{-1}.
 \caption{The evolution of the temperature of the gas and photons found in the universe.}\label{fig:temp}
 \end{figure}
 
-We see from \ref{fig:temp} that the temperature were the same at decoupling. After decoupling the temperature of the gas decrease much faster due to its dependence on $a^{-2}$, with the photons decreasing less to their dependence on $a^{-1}$. 
+We see from \ref{fig:temp} that the temperature were the same before decoupling\footnote{Hard coded to be that way...}. After decoupling the temperature of the gas decrease much faster due to its dependence on $a^{-2}$, with the photons decreasing less to their dependence on $a^{-1}$. 
+
+\subsection{b)}
+We now want to look at the Jeans length and mass. They are generally given as
+\begin{equation}
+\lambda_{J} = c_{s}\sqrt{\frac{\pi}{G \rho}}, \quad M_{J} = \frac{\pi^{5/2}}{6G^{3/2}\rho^{1/2}}\cdot c_s^{3}.
+\end{equation}
+The difference in these quantities before and after decoupling comes from the sound speed $c_s$. Before decoupling the gas is coupled with the photons, thus the sound speed is just $c/\sqrt{3}$, which is constant. For a gas we can find the sound speed as a function of redshift
+\begin{equation}
+c_s = \sqrt{\frac{k_b T}{\mu m_p}} = \sqrt{\frac{k_b}{\mu m_p}}T^{1/2} = \sqrt{\frac{k_b}{\mu m_p}}\left(4\cdot 10^{-3}a^{-2}\right)^{1/2} = 4\cdot 10^{-3/2}(1+z)\sqrt{\frac{k_b}{\mu m_p}},
+\end{equation}
+where $k_b$ is Boltzmann's constant, $m_p$ is the proton mass and $a = 1/(1+z)$. We are going to use that $\rho = \rho_0 a^{-3}$, we thus get that 
+\begin{equation}
+\rho = \rho_0 (1+z)^3.
+\end{equation}
+We can then write the Jeans mass and length as functions of redshift
+\begin{equation}
+\lambda_{J,after} = 4\cdot 10^{-3/2}(1+z)(1+z)^{-3/2}\sqrt{\frac{k_b}{\mu m_p}}\sqrt{\frac{\pi}{G \rho_0^{1/2}}} =4\cdot 10^{-3/2}(1+z)^{-1/2} \sqrt{\frac{k_b}{\mu m_p}}\sqrt{\frac{\pi}{G \rho_0^{1/2}}}
+\end{equation}
+\begin{equation}
+M_{J,after} = \frac{\pi^{5/2}}{6G^{3/2}\rho_0^{1/2}}\cdot \left(4\cdot 10^{-3/2}(1+z)\right)^{3}\cdot (1+z)^{-3/2} = 12\cdot 10^{-1/2}\frac{\pi^{5/2}}{6G^{3/2}\rho_0^{1/2}}(1+z)^{3/2}.
+\end{equation}
+This is after the decoupling. Before decoupling the only dependence on redshift comes from the density, so we get
+\begin{equation}
+\lambda_{J,before} = \frac{c}{\sqrt{3}}\sqrt{\frac{\pi}{G \rho_0}}(1+z)^{-3/2}
+\end{equation}
+\begin{equation}
+M_{J,before} = \frac{\pi^{5/2}}{6G^{3/2}\rho_0^{1/2}}\cdot \left(\frac{c}{\sqrt{3}}\right)^3\cdot(1+z)^{-3/2}.
+\end{equation}
+
+
+\begin{figure}
+     \centering
+     \subfloat[][a]{\includegraphics[scale=0.12]{length}\label{fig:length}}
+     \subfloat[][b]{\includegraphics[scale=0.12]{mass}\label{fig:mass}}
+     \caption{Comparison of steady state results (a) x method (b) y method}
+     \label{steady_state}
+\end{figure}
 
 
 \section{Exercise 4}
