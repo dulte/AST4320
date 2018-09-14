@@ -130,7 +130,46 @@ And knowing that $\phi_0$ and $\bar{\rho}$ have to follow the Poisson equation a
 
 \section{Exercise 2}
 \subsection{a)}
-We want to find expressions for $H = \dot{a}/a$. We start with the expression when $(\Omega_{m},\Omega_{\Lambda}) = (1,0)$. We know from the lecture notes that this gives
+We start with the Friedman equation
+\begin{equation}
+\dot{a}^2 = \frac{8\pi G}{3}\rho\cdot a^2 -kc^2.
+\end{equation}
+We assume a flat universe, so $k=0$. We can then rewrite to get
+\begin{equation}
+H^2 = \left(\frac{\dot{a}}{a}\right)^2 =  \frac{8\pi G}{3}\rho =  \frac{8\pi G}{3}\left(\rho_{m}+\rho_{\Lambda}\right).
+\end{equation}
+We are only looking at universes with matter and a cosmological constants, so the density of the universe is $\rho_{m}+\rho_{\Lambda}$. We know from the continuity equation that the densities evolves as follows:
+\begin{equation}
+\rho = \rho_{0}a^{3(1+\omega)}.
+\end{equation}
+This gives us that
+\begin{equation}
+\rho_{m} = \rho_{0,m}a^{-3}, \quad \rho_{\Lambda} = \rho_{0,\Lambda}. 
+\end{equation}
+Introducing the critical density
+\begin{equation}
+\rho_{crit} = \frac{3H_{0}^2}{8\pi G},
+\end{equation}
+we can rewrite the densities as
+\begin{equation}
+\rho = \rho_{crit}\Omega a^{3(1+\omega)}.
+\end{equation}
+So we then get
+
+\begin{equation}
+H^2 = \frac{8\pi G}{3}\cdot\rho_{crit}(\Omega_{m}a^{-3} + \Omega_{\Lambda}) = \frac{8\pi G}{3}\cdot\frac{3H_{0}^2}{8\pi G}(\Omega_{m}a^{-3} + \Omega_{\Lambda}).
+\end{equation}
+Thus we get our final form
+\begin{equation}
+H^2 = H_0^2(\Omega_{m}a^{-3} + \Omega_{\Lambda}).
+\end{equation}
+
+
+
+
+We now have all we actually need to solve the differential equation for the density contrast. But to be thorough I will find $H=\dot{a}/a$ as a function of time.
+
+We start with the expression when $(\Omega_{m},\Omega_{\Lambda}) = (1,0)$. We know from the lecture notes that this gives
 \begin{equation}\label{eq:o_m=1}
 H = 2/3t.
 \end{equation}
@@ -207,7 +246,7 @@ We see from \ref{fig:a_v_delta} that for $(1,0)$ we have a linear function, whic
 \subsection{c)}
 We now want to find the grown factor 
 \begin{equation}\label{eq:f}
-f = \frac{\ln \delta}{\ln a}.
+f = \frac{d\ln \delta}{d\ln a}.
 \end{equation}
 Since we have $\delta$ and $a$, we can approximate this numerically as
 \begin{equation}
@@ -224,7 +263,7 @@ z = \frac{1}{a} - 1.
 \caption{The evolution of the growth factor for three different universe models with only matter and a cosmological constant.}\label{fig:z_v_f}
 \end{figure}
 
-As we see from \ref{fig:z_v_f} the growth factor for the $\Omega_{m} = 1$ universe is more or less flat at $f = 0$. The two other models again follows this at the early stages, but decreases for lower $z$, with the model with highest $\Omega_{\Lambda}$ decreasing most.
+As we see from \ref{fig:z_v_f} the growth factor for the $\Omega_{m} = 1$ universe is more or less flat at $f = 1$. The two other models again follows this at the early stages, but decreases for lower $z$, with the model with highest $\Omega_{\Lambda}$ decreasing most.
 
 \section{Exercise 3}
 \subsection{a)}
@@ -289,16 +328,20 @@ M_{J,before} = \frac{\pi^{5/2}}{6G^{3/2}\rho_0^{1/2}}\cdot \left(\frac{c}{\sqrt{
 \end{equation}
 
 
-\begin{figure}
-     \centering
-     \subfloat[][The Jeans Length before and after the decoupling is mark by a significant drop before it starts increasing.]{\includegraphics[scale=0.12]{length}\label{fig:length}}
-     \subfloat[][The Jeans Length before and after the decoupling is mark by a significant drop before it starts decreasing.]{\includegraphics[scale=0.12]{mass}\label{fig:mass}}
-     \caption{Evolution of Jeans length and mass.}
-     \label{fig:jeans}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.25]{length}
+\caption{The Jeans Length before and after the decoupling is mark by a significant drop before it starts increasing.}\label{fig:length}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.25]{mass}
+\caption{The Jeans mass before and after the decoupling is mark by a significant drop before it starts decreasing.}\label{fig:mass}
 \end{figure}
 
 
-We can see from \ref{fig:jeans} that for both the Jeans length and mass there is a significant drop at recombination. This is because the speed of sound goes from that of a photon gas to that of a normal (ideal) gas. The length and mass then evolves with $z$ (almost inverse of one another), with the length increasing and mass decreasing.
+We can see from \ref{fig:length} and \ref{fig:mass} that for both the Jeans length and mass there is a significant drop at recombination. This is because the speed of sound goes from that of a photon gas to that of a normal (ideal) gas. The length and mass then evolves with $z$ (almost inverse of one another), with the length increasing and mass decreasing.
 
 \section{Exercise 4}
 
@@ -360,7 +403,7 @@ R = A(1-\cos \theta) = A \Rightarrow \theta = \pi \text{ or } \frac{3\pi}{2}.
 \end{equation}
 Since the virialization don't happen before $R_{max}$ we must have that
 \begin{equation}
-\pi_{vir} = \frac{3\pi}{2}.
+\theta_{vir} = \frac{3\pi}{2}.
 \end{equation}
 This gives us $\sin \theta = 1$, so we get
 \begin{equation}

@@ -14,36 +14,56 @@ def T_gas(a):
     T = np.where(a<1./(1100+1),T_photon(a),4e-3*1./a**(2))
     return T
 
-def sound_speed(z,type_):
-    c = constants.c
-    k = constants.k
-    mp = constants.m_p
-    mu = 0.63
-    if type_=="photons":
-        return c/np.sqrt(3)
-    else:
-        return np.sqrt(T_gas(1./(1+z))*k/(mu*mp))
 
 def density(z):
     G = constants.G
     a = 1./(z+1)
-    H = 2e-18*np.sqrt(0.3*a**(-3))#+0.7)
-    rho = 3*H**2/(8*np.pi*G)
+    H = 2e-18*np.sqrt(a**(-3))
+    rho_0 = 3*H**2/(8*np.pi*G)
     return rho
 
-
-
-def jeans_length(z,type_):
+def jeans_length_before(z):
+    c = constants.c
     G = constants.G
-    c = np.zeros_like(z)
-    c = np.where(z>1100,sound_speed(z,"photons"),sound_speed(z,type_))
-    return c*np.sqrt(np.pi/(G*density(z)))
+    H0 = 2e-18 #per sec
+    rho_0 = 3*H0**2/(8*np.pi*G)
+
+    return c/(np.sqrt(3))*np.sqrt(np.pi/(G*rho_0))*(1+z)**(-3./2)
+
+
+def jeans_length_after(z):
+    G = constants.G
+    H0 = 2e-18 #per sec
+    rho_0 = 3*H0**2/(8*np.pi*G)
+    mp = constants.m_p
+    k = constants.k
+    mu = 0.62
+
+    return 4*10**(-3/2)*(1+z)**(-1./2)*np.sqrt(k/(mu*mp))*np.sqrt(np.pi/(G*rho_0))
+
+def jeans_mass_before(z):
+    c = constants.c
+    G = constants.G
+    H0 = 2e-18 #per sec
+    rho_0 = 3*H0**2/(8*np.pi*G)
+
+    return (np.pi**(5./2))/(6*G**(3/2.)*rho_0**(1./2))*(c/np.sqrt(3))**3*(1+z)**(-3./2)
+
+def jeans_mass_after(z):
+    c = constants.c
+    G = constants.G
+    H0 = 2e-18 #per sec
+    rho_0 = 3*H0**2/(8*np.pi*G)
+
+    return (np.pi**(5./2))/(6*G**(3/2.)*rho_0**(1./2))*12*10**(0.5)*(1+z)**(3./2)
+
+def jeans_length(z):
+    return np.where(z>1100,jeans_length_before(z),jeans_length_after(z))
+
 
 def jeans_mass(z):
-    G = constants.G
-    rho = density(z)
-    c = np.where(z>1100,sound_speed(z,"photons"),sound_speed(z,"gas"))
-    return (np.pi)**(2./5)/6.*c**3/(G**(3./2)*rho**(1/2.))
+    return np.where(z>1100,jeans_mass_before(z),jeans_mass_after(z))
+
 
 
 if __name__ == '__main__':
@@ -60,7 +80,7 @@ if __name__ == '__main__':
 
     #b)
     z = np.linspace(2000,0,10000)
-    jeans_length_gas = jeans_length(z,"gas")
+    jeans_length_gas = jeans_length(z)
     jeans_mass = jeans_mass(z)
     plt.loglog(z,jeans_length_gas)
     plt.xlim(z[0],z[-1])
