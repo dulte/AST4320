@@ -1,0 +1,89 @@
+\documentclass[a4paper,norsk, 10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage[norsk]{babel}
+\usepackage{a4wide}
+\usepackage{color}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{amssymb}
+\usepackage[dvips]{epsfig}
+\usepackage[toc,page]{appendix}
+\usepackage[T1]{fontenc}
+\usepackage{cite} % [2,3,4] --> [2--4]
+\usepackage{shadow}
+\usepackage{hyperref}
+\usepackage{titling}
+\usepackage{marvosym }
+\usepackage{subcaption}
+\usepackage[noabbrev]{cleveref}
+\usepackage{cite}
+
+
+\setlength{\droptitle}{-10em}   % This is your set screw
+
+\setcounter{tocdepth}{2}
+
+\lstset{language=c++}
+\lstset{alsolanguage=[90]Fortran}
+\lstset{alsolanguage=Python}
+\lstset{basicstyle=\small}
+\lstset{backgroundcolor=\color{white}}
+\lstset{frame=single}
+\lstset{stringstyle=\ttfamily}
+\lstset{keywordstyle=\color{red}\bfseries}
+\lstset{commentstyle=\itshape\color{blue}}
+\lstset{showspaces=false}
+\lstset{showstringspaces=false}
+\lstset{showtabs=false}
+\lstset{breaklines}
+\title{AST4320 Oblig 2}
+\author{Daniel Heinesen, daniehei}
+\begin{document}
+\maketitle
+\section{Exercise 1}
+We have the 1D window function
+\begin{equation}
+W(x) =
+\left\{
+	\begin{array}{ll}
+		1  & \mbox{if } |x| < R \\
+		0 & \mbox{else } 
+	\end{array}
+\right.
+\end{equation}
+We now want to find the Fourier transform of this function. We do this straight forward from the definition of the Fourier transform
+\begin{equation}
+\tilde{W}(k) = \int_{-\infty}^{\infty} W(x) e^{-ikx}dx.
+\end{equation}
+Inserting our definition of $W(x)$ we find
+\begin{equation}
+\tilde{W}(k) = \int_{-\infty}^{-R}0\cdot e^{-ikx}dx + \int_{-R}^{R}1\cdot e^{-ikx}dx + \int_{R}^{\infty}0\cdot e^{-ikx}dx = \int_{-R}^{R}e^{-ikx}dx
+\end{equation}
+\begin{equation}
+= \frac{i}{k}e^{-ikx}\bigg|_{-R}^{R} = \frac{i}{k}\left(e^{-ikR} - e^{ikR}\right) = \frac{2\sin Rk}{k}.
+\end{equation}
+Before we plot this function we need to notice that this is a function that we need to be careful with for $k\rightarrow 0$. With the use of L'Hôpitals rule
+\begin{equation}\label{eq:at_0}
+ \lim_{ k\rightarrow 0} \tilde{W}(k) = \lim_{k\rightarrow 0} \frac{2 \sin Rk}{k}
+= \lim_{k\rightarrow 0} \frac{2R\cos Rk}{1} = 2R. 
+ \end{equation}
+We now see that $\tilde{W}(k)$ is well defined across the whole real line.
+
+\begin{figure}[H]
+\caption{The plot of the Fourier Transform of the top-hat smoothing function $W(x)$. This is plotted with $R=1$.}\label{fig:fourier}
+\end{figure}
+
+We now want to find the \textit{full width at half maximum}, FWHM, for this function. We first need to find the half maximum. From fig.\ref{fig:fourier} we see that maximum is at $0$. We know from \eqref{eq:at_0} that here $\tilde{W}(k=0) = 2R$, so half maximum is $R$. For the width we just need to find for which $k$ we have $\tilde{W} = R$ and multiply it by $2$ (this is because $\tilde{W}$ is symmetric around $0$). So we first need to solve
+\begin{equation}
+R = \frac{2}{k_{\text{half max}}}\sin Rk_{\text{half max}}.
+\end{equation}
+This is difficult to solve analytical, but easy numerically. From our program we easily find that 
+\begin{equation}
+\text{FWHM} = 2\cdot k_{\text{half max}} = 3.77.
+\end{equation}
+
+\end{document}
+
