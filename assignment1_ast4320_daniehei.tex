@@ -65,7 +65,7 @@ which gives us the following for the continuity equation
 \end{equation}
 Integrating on both sides from $\rho_0(t=t_0) \rightarrow \rho(t)$ and $a_0 = 1 \rightarrow a$ we get
 \begin{equation}
-\ln \frac{\rho}{\rho_0} = \ln a^{-3} \Leftrightarrow \rho_0(t) = \rho_0(t=t_0)a^{-3}.
+\ln \frac{\rho_0(t)}{\rho_0(t=t_0)} = \ln a^{-3} \Leftrightarrow \rho_0(t) = \rho_0(t=t_0)a^{-3}.
 \end{equation}
 \subsection{b)}
 We have the Euler and Poisson equation with the permutations
@@ -194,7 +194,7 @@ a(t) = a_0\left(\frac{\Omega_{m}}{\Omega_{\Lambda}}\right)^{1/3}\left[\sinh\left
 \end{equation} 
 which gives us
 \begin{equation}\label{o_m<1}
-\frac{\dot{a}}{a} = \sqrt{\Omega_{\Lambda}}H_0 t\cosh\left(\frac{3}{2}\sqrt{\Omega_{\Lambda}}H_0 t\right)\left[\sinh\left(\frac{3}{2}\sqrt{\Omega_{\Lambda}}H_0 t\right)\right]^{1/3}.
+\frac{\dot{a}}{a} = \sqrt{\Omega_{\Lambda}}H_0 t\cosh\left(\frac{3}{2}\sqrt{\Omega_{\Lambda}}H_0 t\right)\left[\sinh\left(\frac{3}{2}\sqrt{\Omega_{\Lambda}}H_0 t\right)\right]^{-1/3}.
 \end{equation}
 We can just use $(\Omega_{m},\Omega_{\Lambda}) = (0.3,0.7)$ and $(\Omega_{m},\Omega_{\Lambda}) = (0.8,0.2)$ as input here and get the appropriate $H = \dot{a}/a$.
 
@@ -241,7 +241,7 @@ We are given boundary conditions for $\delta$ and $a$, but need one for $x = \de
 \end{figure}
 
 
-We see from \ref{fig:a_v_delta} that for $(1,0)$ we have a linear function, which makes sense since we know that in this universe $\delta \propto a$. For the other two universes we see that $\delta \propto a$ for most of the time. This is due to matter being dominant in the early universe. But later the the cosmological constant takes over, and we get a more rapid expansion. Due to the rapid expansion of $\Lambda$ structures will have a more difficult time forming, and will more likely be torn apart. We therefore see that $\delta$ decreases. The larger $\Omega_{\Lambda}$ is the more expansion there will be, and $\delta$ will decrease faster.
+We see from \ref{fig:a_v_delta} that for $(1,0)$ we have a linear function, which makes sense since we know that in this universe $\delta \propto a$. For the other two universes we see that $\delta \propto a$ for most of the time. This is due to matter being dominant in the early universe. But later the the cosmological constant takes over, and we get a more rapid expansion. Due to the rapid expansion structures will have a more difficult time forming, and will more likely be torn apart. We therefore see that $\delta$ decreases. The larger $\Omega_{\Lambda}$ is the more expansion there will be, and $\delta$ will decrease faster.
 
 \subsection{c)}
 We now want to find the grown factor 
@@ -271,7 +271,7 @@ We start with the temperature for the gas. Since we have a adiabatic expansion, 
 \begin{equation}
 TV^{\gamma - 1} = C,
 \end{equation}
-where $T$ is the temperature, $V$ the volume, $C$ a constant and $\gamma$ is the degrees of freedom, given for a monoatomic gas as $\gamma = 5/3$. We also know that the volume has to be $V \propto a^{3}$, so
+where $T$ is the temperature, $V$ the volume, $C$ a constant and $\gamma$ is the adiabatic index, given for a monoatomic gas as $\gamma = 5/3$. We also know that the volume has to be $V \propto a^{3}$, so
 \begin{equation}
 T_{gas} = \frac{C'}{(a^3)^{5/3 - 1}} = C'a^{-2}.
 \end{equation}
@@ -286,18 +286,20 @@ where $\lambda$ is the wavelength and $b$ a constant (it's value is known, but u
 T_{\gamma} = Ba^{-1}.
 \end{equation}
 
-We know that at the point of decoupling, the temperature must have been the same. This happen at $z = 1100 \Rightarrow a \approx 10^{-3}$ with the temperature $T = 4000K$. Using this we find the constants for the temperatures, and find the temperatures evolves like
+We know that at the point of decoupling, the temperature must have been the same. This happen at $z = 1100 \Rightarrow a \approx 10^{-3}$ with the temperature $T = 4000K$\footnote{I've used this temperature here, which seems that this is for the start of decoupling. $3000$ K is also used alot, since this is the temperature at the end.}. Using this we find the constants for the temperatures, and find the temperatures evolves like
 \begin{equation}
 T_{gas} = 4\cdot 10^{-3}a^{-2}, \quad T_{\gamma} = 4a^{-1}.
 \end{equation}
 
+
+The constants are not exact, but of the same order.
 \begin{figure}[!h]
 \centering
 \includegraphics[scale=0.25]{temp}
 \caption{The evolution of the temperature of the gas and photons found in the universe.}\label{fig:temp}
 \end{figure}
 
-We see from \ref{fig:temp} that the temperature were the same before decoupling\footnote{Hard coded to be that way...}. After decoupling the temperature of the gas decrease much faster due to its dependence on $a^{-2}$, with the photons decreasing less to their dependence on $a^{-1}$. 
+We see from \ref{fig:temp} that the temperatures were the same before decoupling\footnote{Hard coded to be that way...}. After decoupling the temperature of the gas decrease much faster due to its dependence on $a^{-2}$, with the photons decreasing less to their dependence on $a^{-1}$. 
 
 \subsection{b)}
 We now want to look at the Jeans length and mass. They are generally given as
@@ -405,7 +407,7 @@ Since the virialization don't happen before $R_{max}$ we must have that
 \begin{equation}
 \theta_{vir} = \frac{3\pi}{2}.
 \end{equation}
-This gives us $\sin \theta = 1$, so we get
+This gives us $\sin^2 \theta = 1$, so we get
 \begin{equation}
 v^2 = \frac{A^2}{B^2} = \frac{A^2}{\frac{A^3}{GM}} = \frac{GM}{A}.
 \end{equation}
@@ -415,7 +417,7 @@ v_{infall} = \sqrt{\frac{GM}{R_{vir}}}
 \end{equation}
 
 \section{Exercise 6}
-The gravitational binding energy is found in the following way\footnote{To not be called out on plagiarism, this derivation is heavily inspired by/stolen from \url{https://en.wikipedia.org/wiki/Gravitational_binding_energy} and \url{http://scienceworld.wolfram.com/physics/SphereGravitationalPotentialEnergy.html}}:
+The gravitational binding energy is found in the following way\footnote{To not be called out on plagiarism, this derivation is \textbf{heavily} inspired by \url{https://en.wikipedia.org/wiki/Gravitational_binding_energy} and \url{http://scienceworld.wolfram.com/physics/SphereGravitationalPotentialEnergy.html}}:
 
 The energy needed to escape from a system is the same as peeling away all the mass of the system, layer by layer and letting them go to infinity. The energy required to do this is the binding energy. So the energy of peeling one layer is thus given as
 \begin{equation}

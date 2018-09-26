@@ -15,13 +15,6 @@ def T_gas(a):
     return T
 
 
-def density(z):
-    G = constants.G
-    a = 1./(z+1)
-    H = 2e-18*np.sqrt(a**(-3))
-    rho_0 = 3*H**2/(8*np.pi*G)
-    return rho
-
 def jeans_length_before(z):
     c = constants.c
     G = constants.G
@@ -50,12 +43,11 @@ def jeans_mass_before(z):
     return (np.pi**(5./2))/(6*G**(3/2.)*rho_0**(1./2))*(c/np.sqrt(3))**3*(1+z)**(-3./2)
 
 def jeans_mass_after(z):
-    c = constants.c
     G = constants.G
     H0 = 2e-18 #per sec
     rho_0 = 3*H0**2/(8*np.pi*G)
 
-    return (np.pi**(5./2))/(6*G**(3/2.)*rho_0**(1./2))*12*10**(0.5)*(1+z)**(3./2)
+    return (np.pi**(5./2))/(6*G**(3/2.)*rho_0**(1./2))*4**3*10**(0.5)*(1+z)**(3./2)
 
 def jeans_length(z):
     return np.where(z>1100,jeans_length_before(z),jeans_length_after(z))

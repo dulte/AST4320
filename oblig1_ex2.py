@@ -42,14 +42,13 @@ def solve(omega_m,omega_l,delta0,a0,steps,H0):
         x_array[i+1] = x_array[i] + dx
         ddelta = x_array[i+1]*da*1./a_d
         delta_array[i+1] = delta_array[i] + ddelta
-        if delta_array[i+1] != delta_array[i+1]:
-            break
+    
 
     return delta_array,a_array, x_array
 
 def getF(delta,a):
     return (np.log(delta[1:]/delta[:-1]))/(np.log(a[1:]/a[:-1]))
-    return a[1:]/delta[1:]*((delta[1:]-delta[:-1])/(a[1:]-a[:-1]))
+    
 
 
 if __name__ == '__main__':
