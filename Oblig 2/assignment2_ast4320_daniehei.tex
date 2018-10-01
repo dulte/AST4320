@@ -73,7 +73,9 @@ Before we plot this function we need to notice that this is a function that we n
 We now see that $\tilde{W}(k)$ is well defined across the whole real line.
 
 \begin{figure}[H]
-\caption{The plot of the Fourier Transform of the top-hat smoothing function $W(x)$. This is plotted with $R=1$.}\label{fig:fourier}
+\centering
+\includegraphics[scale=0.3]{fourier}
+\caption{The plot of the Fourier Transform of the top-hat smoothing function $W(x)$. This is plotted with $R=1$. The FWHM is marked with the arrow.}\label{fig:fourier}
 \end{figure}
 
 We now want to find the \textit{full width at half maximum}, FWHM, for this function. We first need to find the half maximum. From fig.\ref{fig:fourier} we see that maximum is at $0$. We know from \eqref{eq:at_0} that here $\tilde{W}(k=0) = 2R$, so half maximum is $R$. For the width we just need to find for which $k$ we have $\tilde{W} = R$ and multiply it by $2$ (this is because $\tilde{W}$ is symmetric around $0$). So we first need to solve
@@ -84,6 +86,42 @@ This is difficult to solve analytical, but easy numerically. From our program we
 \begin{equation}
 \text{FWHM} = 2\cdot k_{\text{half max}} = 3.77.
 \end{equation}
+
+\section{Exercise 2}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{dist}
+\caption{Distribution of the endstep in the random walk. This is plotted with $\epsilon = 0.1$ and $\sigma^2(S_c) = 10^{-4}$. We see that this follows a Gaussian distribution with $\sigma^2 = \pi$.}\label{fig:fourier}
+\end{figure}
+
+
+\section{Exercise 3}
+
+\subsection{a)}
+We have that the probability of $\delta$ provided that $\delta$ was never larger than $\delta_{crit}$ at some scale $M' > M$ is
+\begin{equation}\label{eq:Pnc}
+P_{nc}(\delta|M) = \frac{1}{\sqrt{2\pi}\sigma(M)}\left[\exp\left(-\frac{\delta^2}{2\sigma^2 (M)}\right)-\exp\left(-\frac{(2\delta_{crit} - \delta)^2}{2\sigma^2 (M)}\right)\right].
+\end{equation}
+Since $\delta$ never has crossed $\delta_{crit}$ it is safe to assume that collapse has never happened here. This means that the probability of a mass at $\mathbf{x}$ is  therefore  embedded  within  a  \textit{non}-collapsed object of mass $>M$ is therefore
+\begin{equation}
+\int_{-\infty}^{\delta_{crit}} P_{nc}(\delta|M) d\delta.
+\end{equation}
+This means that the probability that this mass is within a collapsed mass is 1 minus this probability. So
+\begin{equation}\label{eq:Pm}
+P(>M) = 1 - \int_{-\infty}^{\delta_{crit}} P_{nc}(\delta|M) d\delta.
+\end{equation}
+
+\subsection{b)}
+Using \eqref{eq:Pm} and \eqref{eq:Pnc} we get
+
+\begin{equation}\label{eq:Pm}
+P(>M) = 1 - \int_{-\infty}^{\delta_{crit}} \frac{1}{\sqrt{2\pi}\sigma(M)}\left[\exp\left(-\frac{\delta^2}{2\sigma^2 (M)}\right)-\exp\left(-\frac{(2\delta_{crit} - \delta)^2}{2\sigma^2 (M)}\right)\right] d\delta
+\end{equation}
+\begin{equation}
+= 1 - \int_{-\infty}^{\delta_{crit}} \frac{1}{\sqrt{2\pi}\sigma(M)}\left[\exp\left(-\frac{\delta^2}{2\sigma^2 (M)}\right)\right]d\delta+\int_{-\infty}^{\delta_{crit}} \frac{1}{\sqrt{2\pi}\sigma(M)}\left[\exp\left(-\frac{(2\delta_{crit} - \delta)^2}{2\sigma^2 (M)}\right)\right] d\delta
+\end{equation}
+
 
 \end{document}
 

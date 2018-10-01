@@ -50,6 +50,9 @@ class RandomWalk:
 class MakeMultipleWalks(RandomWalk):
     def __init__(self,epsilon,k,max_iter=1e7):
         RandomWalk.__init__(self,epsilon,k,max_iter)
+        self.S = None
+        self.deltas = None
+        self.restriced_deltas = None
 
 
     def take_walks(self,nb_walks):
@@ -61,28 +64,72 @@ class MakeMultipleWalks(RandomWalk):
             deltas[i] = path[-1,0]
 
 
-        return deltas,path[-1,1]
+        self.deltas,self.S = deltas,path[-1,1]
 
 
-    def get_path_distribution(self,nb_walks,bins=10):
-        deltas,S = self.take_walks(nb_walks)
+    def take_restricted_walks(self,nb_walks,delta_crit):
+        deltas = []
+        for i in tqdm(range(int(nb_walks))):
+            self.reset()
+            path = self.walk()
+
+            reacehed_deltas = path[:,0]
+            if np.sum(reacehed_deltas >= delta_crit):
+                continue
+            else:
+                deltas.append(path[-1,0])
+
+        self.restriced_deltas,self.S = deltas,path[-1,1]
 
 
+    def get_path_distribution(self,bins=10):
+        deltas = self.deltas
+        S = self.S
         cont_deltas = np.linspace(np.min(deltas),np.max(deltas),1000)
 
-        plt.hist(deltas,bins="auto",normed=True)
-        plt.plot(cont_deltas,self.P(cont_deltas,S))
+        plt.hist(deltas,bins="auto",normed=True,label="Distrbution of Random Walk")
+        plt.plot(cont_deltas,self.P(cont_deltas,S),"r",label="Normal Distrbution")
+        plt.title(r"Distrbution of Density Contrast $\delta$",fontsize=25)
+        plt.xlabel(r"$\delta$",fontsize=25)
+        plt.ylabel(r"$P(\delta|M)$",fontsize=25)
+        plt.legend(loc="best")
         plt.show()
+
+
+    def get_path_never_cross_distribution(self,bins=10,delta_crit=1):
+
+
+        deltas = self.restriced_deltas
+        S = self.S
+        cont_deltas = np.linspace(np.min(deltas),np.max(deltas),1000)
+
+        plt.hist(deltas,bins="auto",normed=True,label=r"Distrbution of Random Walk")
+        plt.plot(cont_deltas,self.P_nc(cont_deltas,S,delta_crit),"r",label="Normal Distrbution")
+        plt.title(r"Distrbution of Density Contrast $\delta$ That Never Crosses $\delta_{crit}$ = %s" %delta_crit,fontsize=25)
+        plt.xlabel(r"$\delta$",fontsize=25)
+        plt.ylabel(r"$P_{nc}(\delta|M)$",fontsize=25)
+        plt.legend(loc="best")
+        plt.show()
+
+
+
+
 
 
     def P(self,delta,S):
         var = np.pi/S**4
         return 1./(sqrt(2*np.pi)*sqrt(var))*np.exp(-(delta**2)/(2*var))
 
+    def P_nc(self,delta,S,delta_crit):
+        var = np.pi/S**4
+        return 1./(sqrt(2*np.pi)*sqrt(var))*(np.exp(-(delta**2)/(2*var)) - \
+                np.exp(-((2*delta_crit-delta)**2)/(2*var)))
 
 if __name__ == '__main__':
     k = 2*np.pi/((np.pi/1e-4)**(1./4))
     epsilon = 1e-1
     walk = MakeMultipleWalks(epsilon,k)
-
-    walk.get_path_distribution(1e5)
+    walk.take_walks(1e3)
+    walk.get_path_distribution()
+    walk.take_restricted_walks(1e4,1)
+    walk.get_path_never_cross_distribution()
