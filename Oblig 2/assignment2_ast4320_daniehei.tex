@@ -119,8 +119,58 @@ Using \eqref{eq:Pm} and \eqref{eq:Pnc} we get
 P(>M) = 1 - \int_{-\infty}^{\delta_{crit}} \frac{1}{\sqrt{2\pi}\sigma(M)}\left[\exp\left(-\frac{\delta^2}{2\sigma^2 (M)}\right)-\exp\left(-\frac{(2\delta_{crit} - \delta)^2}{2\sigma^2 (M)}\right)\right] d\delta
 \end{equation}
 \begin{equation}
-= 1 - \int_{-\infty}^{\delta_{crit}} \frac{1}{\sqrt{2\pi}\sigma(M)}\left[\exp\left(-\frac{\delta^2}{2\sigma^2 (M)}\right)\right]d\delta+\int_{-\infty}^{\delta_{crit}} \frac{1}{\sqrt{2\pi}\sigma(M)}\left[\exp\left(-\frac{(2\delta_{crit} - \delta)^2}{2\sigma^2 (M)}\right)\right] d\delta
+= 1 - \underbrace{\int_{-\infty}^{\delta_{crit}} \frac{1}{\sqrt{2\pi}\sigma(M)}\left[\exp\left(-\frac{\delta^2}{2\sigma^2 (M)}\right)\right]d\delta}_{I_1}+\underbrace{\int_{-\infty}^{\delta_{crit}} \frac{1}{\sqrt{2\pi}\sigma(M)}\left[\exp\left(-\frac{(2\delta_{crit} - \delta)^2}{2\sigma^2 (M)}\right)\right] d\delta}_{I_2}.
 \end{equation}
+We then look at this term by term:
+\subsubsection*{$I_1$:}
+We know that we want something with an error function. To get this we see that we need to introduce the variable
+\begin{equation}
+u = \frac{\delta}{\sqrt{2}\sigma},
+\end{equation}
+which gives
+\begin{equation}
+\Rightarrow \frac{du}{d\delta} = \frac{1}{\sqrt{2}\sigma} \Rightarrow d\delta = \sqrt{2}\sigma du.
+\end{equation}
+We need to take care of the upper limit $u_{\uparrow}$. We see that this becomes
+\begin{equation}
+\delta_{\uparrow} = \delta_{crit} = \sqrt{2}\sigma u_{\uparrow} \Rightarrow u_{\uparrow} = \frac{\delta_{crit}}{\sqrt{2}\sigma} \equiv \frac{\nu}{\sqrt{2}}.
+\end{equation}
+We can then solve $I_1$ as
+\begin{equation}
+I_1 = \frac{1}{2}\int_{-\infty}^{\nu/\sqrt{2}} \frac{2}{\sqrt{\pi}}e^{-u^2} du.
+\end{equation}
+Looking this up on integration tables we find that this is
+\begin{equation}
+I_1 = \frac{1}{2}\left[1+\text{erf}\left(\frac{\nu}{\sqrt{2}}\right)\right]
+\end{equation}
+\subsubsection*{$I_2$:}
+This integral is quite similar to $I_1$, so we use a similar variable change
+\begin{equation}
+u = \frac{2\delta_{crit}-\delta}{\sqrt{2}\sigma},
+\end{equation}
+which gives us
+\begin{equation}\label{eq:du}
+\Rightarrow \frac{du}{d\delta} = -\frac{1}{\sqrt{2}\sigma} \Rightarrow d\delta = -\sqrt{2}\sigma du.
+\end{equation}
+We now need to look at the limits. While the upper limit stays the same, we need to take a look at the lower limit
+\begin{equation}
+\delta_{\downarrow} = x = 2\delta_{crit} - \sqrt{2}u_{\downarrow}\sigma \Rightarrow = u_{\downarrow} = \frac{2\delta_{crit} - x}{\sqrt{2}\sigma}, 
+\end{equation}
+then taking the limit of $x$ we get
+\begin{equation}
+u_{\downarrow} =\lim_{x \rightarrow -\infty} \frac{2\delta_{crit} - x}{\sqrt{2}\sigma} = \infty.
+\end{equation}
+We can then use the minus sign from \eqref{eq:du} to turn the limits around and get
+\begin{equation}
+I_2 = \frac{1}{2}\int_{\nu/\sqrt{2}}^{\infty}\frac{2}{\sqrt{\pi}}e^{-u^2} du = \frac{1}{2}\text{erfc}\left(\frac{\nu}{\sqrt{2}}\right) = \frac{1}{2}\left[1-\text{erf}\left(\frac{\nu}{\sqrt{2}}\right)\right]
+\end{equation}
+
+We thus get the probability
+\begin{equation}
+P(>M) = 1-I_1 + I_2 = 1 - \frac{1}{2}\left[1+\text{erf}\left(\frac{\nu}{\sqrt{2}}\right)\right] + \frac{1}{2}\left[1-\text{erf}\left(\frac{\nu}{\sqrt{2}}\right)\right] = 1 - \text{erf}\left(\frac{\nu}{\sqrt{2}}\right) = 2P(\delta > \delta_{crit}|M).
+\end{equation}
+And there is no need for the fudge factor!
+
 
 
 \end{document}
