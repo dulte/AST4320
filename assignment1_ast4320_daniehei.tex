@@ -419,27 +419,38 @@ v_{infall} = \sqrt{\frac{GM}{R_{vir}}}
 \section{Exercise 6}
 The gravitational binding energy is found in the following way\footnote{To not be called out on plagiarism, this derivation is \textbf{heavily} inspired by \url{https://en.wikipedia.org/wiki/Gravitational_binding_energy} and \url{http://scienceworld.wolfram.com/physics/SphereGravitationalPotentialEnergy.html}}:
 
-The energy needed to escape from a system is the same as peeling away all the mass of the system, layer by layer and letting them go to infinity. The energy required to do this is the binding energy. So the energy of peeling one layer is thus given as
+We can imagine having a mass -- a sphere -- consisting of many infinitesimal layers of thickness $dr$. The gravitational potential between a given shell and the mass found inside the shell is then given as 
+
 \begin{equation}
-dU = - G\frac{m_{shell}m_{interior}}{r}.
+dU = - G\frac{m_{shell}m}{r},
 \end{equation}
-The mass that resides in the interior under the shell, is simply that of a sphere
+
+where $m_{shell}$ is the mass of the shell, while $m$ is the mass if the matter inside the shell. $m$ is just given by the radius from the center to the shell $r$ and the density $\rho$ of the matter
+
+
 \begin{equation}
-m_{interior} = \frac{4}{3}\pi r^3 \rho.
+m = \frac{4}{3}\pi r^3 \rho.
 \end{equation}
-The shell has a volume equal to that of the area of a sphere times the infinitesimal thickness of said shell. This gives us the mass
+
+The shell itself is of infinitesimal size, and the mass can therefore be given as the density times the area of the shell, times the infinitesimal thickness of the shell
+
 \begin{equation}
-m_{mass} = 4\pi r^2\rho dr.
+m_{shell} = 4\pi r^2\rho dr.
 \end{equation}
-These give us
+
+This gives us 
+
 \begin{equation}
 dU = - G\frac{\frac{4}{3}\pi r^3 \rho\cdot 4\pi r^2\rho dr}{r} = -G\frac{16}{3}\pi^2\rho^2 r^4 dr.
 \end{equation}
-To get the total energy, we simply integrate from $r=0$ to the edge of the mass $r=R$
+
+
+Now we have the potential energy of one such shell, so to get the total gravitational binding energy we need to integrate over all the shell, from the center of the sphere to the total radius $r=R$
+
 \begin{equation}
 U = -\frac{16}{3}G\pi^2\rho^2 \int_0^R r^4 dr = -\frac{16}{15}G\pi^2\rho^2 R^5.
 \end{equation}
-For a uniform sphere with radius $R$, the density $\rho$ is simply given as
+For a sphere with radius $R$, the density $\rho$ is simply given as
 \begin{equation}
 \rho = \frac{M}{4/3 \pi R^3}.
 \end{equation}
@@ -447,6 +458,38 @@ This gives us the binding energy
 \begin{equation}
 U = -\frac{3GM^2}{5R}.
 \end{equation}
+
+
+
+
+%The energy needed to escape from a system is the same as peeling away all the mass of the system, layer by layer and letting them go to infinity. The energy required to do this is the binding energy. So the energy of peeling one layer is thus given as
+%\begin{equation}
+%dU = - G\frac{m_{shell}m_{interior}}{r}.
+%\end{equation}
+%The mass that resides in the interior under the shell, is simply that of a sphere
+%\begin{equation}
+%m_{interior} = \frac{4}{3}\pi r^3 \rho.
+%\end{equation}
+%The shell has a volume equal to that of the area of a sphere times the infinitesimal thickness of said shell. This gives us the mass
+%\begin{equation}
+%m_{mass} = 4\pi r^2\rho dr.
+%\end{equation}
+%These give us
+%\begin{equation}
+%dU = - G\frac{\frac{4}{3}\pi r^3 \rho\cdot 4\pi r^2\rho dr}{r} = -G\frac{16}{3}\pi^2\rho^2 r^4 dr.
+%\end{equation}
+%To get the total energy, we simply integrate from $r=0$ to the edge of the mass $r=R$
+%\begin{equation}
+%U = -\frac{16}{3}G\pi^2\rho^2 \int_0^R r^4 dr = -\frac{16}{15}G\pi^2\rho^2 R^5.
+%\end{equation}
+%For a uniform sphere with radius $R$, the density $\rho$ is simply given as
+%\begin{equation}
+%\rho = \frac{M}{4/3 \pi R^3}.
+%\end{equation}
+%This gives us the binding energy
+%\begin{equation}
+%U = -\frac{3GM^2}{5R}.
+%\end{equation}
 
 
 
