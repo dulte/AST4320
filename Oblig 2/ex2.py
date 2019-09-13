@@ -115,8 +115,8 @@ class MakeMultipleWalks(RandomWalk):
         deltas = self.restriced_deltas
         S = self.S
         cont_deltas = np.linspace(np.min(deltas),np.max(deltas),1000)
-
-        plt.hist(deltas,bins="auto",normed=True,label=r"Distrbution of Random Walk")
+      
+        plt.hist(deltas,bins=100,weights=np.ones_like(100)*1e4,label=r"Distrbution of Random Walk")
         plt.plot(cont_deltas,self.P_nc(cont_deltas,S,delta_crit),"r",label="Normal Distrbution")
         plt.title(r"Distrbution of Density Contrast $\delta$ That Never Crosses $\delta_{crit}$ = %s" %delta_crit,fontsize=25)
         plt.xlabel(r"$\delta$",fontsize=25)
@@ -135,8 +135,8 @@ class MakeMultipleWalks(RandomWalk):
 
     def P_nc(self,delta,S,delta_crit):
         var = np.pi/S**4
-        return 1/(0.362113)*1./(sqrt(2*np.pi)*sqrt(var))*(np.exp(-(delta**2)/(2*var)) - \
-                np.exp(-((2*delta_crit-delta)**2)/(2*var)))
+        return 1./(sqrt(2*np.pi)*sqrt(var))*(np.exp(-(delta**2)/(2*var)) - \
+                np.exp(-((2*delta_crit-delta)**2)/(2*var)))#*1/(0.362113)
 
 if __name__ == '__main__':
     k = 2*np.pi/((np.pi/1e-4)**(1./4))
