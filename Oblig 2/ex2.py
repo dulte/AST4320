@@ -39,7 +39,7 @@ class RandomWalk:
 
     def walk(self):
         iter = 0
-        while self.S>1 and iter<self.max_iter:
+        while self.S-self.epsilon>=1 and iter<self.max_iter:
             self.make_step()
 
             iter += 1
@@ -48,7 +48,7 @@ class RandomWalk:
     
     def restricted_walk(self,delta_crit):
         iter = 0
-        while self.S>1 and iter<self.max_iter:
+        while self.S-self.epsilon>=1 and iter<self.max_iter:
             self.make_step()
 
             iter += 1
@@ -56,7 +56,10 @@ class RandomWalk:
             if self.delta >= delta_crit:
                 return None
         
-        return np.array(self.path)
+        if iter < self.max_iter:
+            return np.array(self.path)
+        else:
+            return None
 
 
 class MakeMultipleWalks(RandomWalk):
@@ -83,15 +86,12 @@ class MakeMultipleWalks(RandomWalk):
         deltas = []
         for i in tqdm(range(int(nb_walks))):
             self.reset()
-            path = self.restricted_walk(delta_crit)
 
-            
-            if path is None:
-                continue
-            else:
+            path = self.walk()
+            if not (path[:,0] > delta_crit).any():
                 deltas.append(path[-1,0])
                 self.S = path[-1,1]
-
+         
         self.restriced_deltas = deltas
 
 
@@ -134,15 +134,21 @@ class MakeMultipleWalks(RandomWalk):
         return 1./(sqrt(2*np.pi)*sqrt(var))*np.exp(-(delta**2)/(2*var))
 
     def P_nc(self,delta,S,delta_crit):
+        S = 1.0
         var = np.pi/S**4
-        return 1/(0.362113)*1./(sqrt(2*np.pi)*sqrt(var))*(np.exp(-(delta**2)/(2*var)) - \
-                np.exp(-((2*delta_crit-delta)**2)/(2*var)))
+
+        
+
+        return 1./(sqrt(2*np.pi)*sqrt(var))*(np.exp(-(delta**2)/(2*var)) - \
+                np.exp(-((2*delta_crit-delta)**2)/(2*var))) *2.2 #With 
 
 if __name__ == '__main__':
     k = 2*np.pi/((np.pi/1e-4)**(1./4))
-    epsilon = 1e-1
+    epsilon = 1.23e-1
     walk = MakeMultipleWalks(epsilon,k)
-    #walk.take_walks(1e3)
-    #walk.get_path_distribution()
-    walk.take_restricted_walks(1e4,1)
+    walk.take_walks(1e5)
+    walk.get_path_distribution()
+    walk.take_restricted_walks(1e5,1)
     walk.get_path_never_cross_distribution()
+
+    

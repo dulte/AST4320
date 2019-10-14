@@ -89,10 +89,18 @@ This is difficult to solve analytical, but easy numerically. From our program we
 
 \section{Exercise 2}
 
+By doing the random walk, found in \textit{ex2.py}, we get the distribution for $\delta$ found in fig. \ref{fig:walk}. We can see that this follows the Gaussian function $\delta \sim N(0,\sigma(M))$. If we restrict our self to the walks that never cross the critical density $\delta_c$ we get the distribution for $\delta_{nc}$ seen in fig. \ref{fig:restricted_walk}. To make the hight of the analytical distribution fit that of the simulated data, I had to multiply it with a fudge factor of $2.2$. Even with this fudge factor the simulated distribution is skewed to the right, with a dramatic cut off point at $\delta = 1$. This cut off point is expected since we restrict out walks to $\delta < \delta_c = 1$, but the cut off is a bit sharp. With a lower $\epsilon$ this becomes smaller, but the code takes to long to run.
+
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.3]{dist}
-\caption{Distribution of the endstep in the random walk. This is plotted with $\epsilon = 0.1$ and $\sigma^2(S_c) = 10^{-4}$. We see that this follows a Gaussian distribution with $\sigma^2 = \pi$.}\label{fig:fourier}
+\caption{Distribution of the endstep in the random walk, simulated with $\epsilon = 0.1$ and $10^5$ walks. We see that this follows a Gaussian distribution with $\sigma^2 = \pi$.}\label{fig:walk}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{dist_under_crit}
+\caption{Distribution of the endstep in the random walk, simulated with $\epsilon = 0.1$ and $10^5$ walks. We can see that distribution is a bit of the expected distribution, even with a $2.2$ fudge factor.}\label{fig:restricted_walk}
 \end{figure}
 
 
