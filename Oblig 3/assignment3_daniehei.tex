@@ -1,0 +1,135 @@
+\documentclass[a4paper,norsk, 10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage[norsk]{babel}
+\usepackage{a4wide}
+\usepackage{color}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{amssymb}
+\usepackage[dvips]{epsfig}
+\usepackage[toc,page]{appendix}
+\usepackage[T1]{fontenc}
+\usepackage{cite} % [2,3,4] --> [2--4]
+\usepackage{shadow}
+\usepackage{hyperref}
+\usepackage{titling}
+\usepackage{marvosym }
+\usepackage{subcaption}
+\usepackage[noabbrev]{cleveref}
+\usepackage{cite}
+\usepackage{todonotes}
+
+
+\setlength{\droptitle}{-10em}   % This is your set screw
+
+\setcounter{tocdepth}{2}
+
+\lstset{language=c++}
+\lstset{alsolanguage=[90]Fortran}
+\lstset{alsolanguage=Python}
+\lstset{basicstyle=\small}
+\lstset{backgroundcolor=\color{white}}
+\lstset{frame=single}
+\lstset{stringstyle=\ttfamily}
+\lstset{keywordstyle=\color{red}\bfseries}
+\lstset{commentstyle=\itshape\color{blue}}
+\lstset{showspaces=false}
+\lstset{showstringspaces=false}
+\lstset{showtabs=false}
+\lstset{breaklines}
+\title{AST4320 Oblig2}
+\author{Daniel Heinesen, daniehei}
+\begin{document}
+\maketitle
+
+\section{Exercise 2}
+
+We would like to find the optical depth $\tau_e$ of the IGM as a function of redshift $z$. The optical depth is given as
+
+\begin{equation}\label{eq:tau}
+\tau_e(z) = c\int_0^z \frac{n_e(z) \sigma_T dz}{H(z)(1+z)},
+\end{equation}
+where $\sigma_t$ is the Thompson cross section, $n_e$ the electron density and $H(z)$ the Hubble parameter. Since the Universe is taken to be completely ionized, he assume that $n_e \approx \bar{n_H} = 1.9 \cdot 10^{-7} (1+z)^3 $ cm$^{-3}$. We get the Hubble parameter from the Friedmann equation
+
+\begin{equation}
+H(z) = H_0 \sqrt{\Omega_m (1+z)^3 + \Omega_r(1+z)^4 + \Omega_{\Lambda}},
+\end{equation}
+where $\Omega_{\Lambda} = 0.692$, $\Omega_m = 0.308$ and $\Omega_r = 0$.
+
+We will integrate \eqref{eq:tau} from $z=0$ to $10$. We assume that $\tau_e(0) \approx 0$.
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.7]{tau}
+\caption{The optical depth of the intergalactic medium. We see that for larger redshift the optical depth increases.}
+\end{figure}
+
+
+\section{Exercise 3}
+\subsection{a)}
+We have the differential equation for an isothermal halo
+
+\begin{equation}\label{eq:diff}
+-\dfrac{k_b T}{m_{DM} r^2}\dfrac{d}{dr}r^2 \dfrac{d}{dr} \ln \rho = 4 \pi G\rho.
+\end{equation}
+
+We have an ansatz that
+\begin{equation}\label{eq:ansatz}
+\rho(r) = \dfrac{A}{r^2}, \qquad A = \frac{k_b T}{2\pi Gm_{DM}}.
+\end{equation}
+
+To see that this is a solution, we put \eqref{eq:ansatz} into \eqref{eq:diff}. Looking at the RHS of \eqref{eq:diff} we get 
+
+
+\begin{equation}
+-\dfrac{k_b T}{m_{DM} r^2}\dfrac{d}{dr}r^2 \dfrac{d}{dr} \ln \rho = -\dfrac{k_b T}{m_{DM} r^2}\dfrac{d}{dr}r^2 \dfrac{r^2}{A}\cdot \left(-\dfrac{2A}{r^3}\right)
+\end{equation}
+\begin{equation}
+2\dfrac{k_b T}{m_{DM} r^2}\dfrac{d}{dr}r = 2\dfrac{k_b T}{m_{DM} r^2}.
+\end{equation}
+
+Thus we get
+
+\begin{equation}
+2\dfrac{k_b T}{m_{DM} r^2} = 4\pi G \dfrac{A}{r^2} \Rightarrow A = \dfrac{k_b T}{2\pi G m_{DM} }.
+\end{equation}
+
+Thus \eqref{eq:ansatz} solves \eqref{eq:diff}.
+
+
+\subsection{b)}
+
+We have that a gas in hydrostatic equilibrium 
+
+\begin{equation}\label{eq:dp}
+\dfrac{dp}{dr} = - \dfrac{GM(<r)\rho}{r^2},
+\end{equation}
+where $M(<r)$ is the mass within a radius $r$ and $p$ is the pressure. We can see that our isothermal gas, with the density defined in \eqref{eq:ansatz}, behaves in the similar way. We start by finding the mass, which for a spherical symmetric mass is given as
+\begin{equation}\label{eq:mass}
+M(<r) = 4\pi \int_0^r \rho(r') r'^2 dr' = 4\pi \int_0^r \dfrac{A}{r'^2} r'^2 dr' = 4\pi \int_0^r A  dr' = 4\pi A r.
+\end{equation}
+In out expression of $A$ we have the dark matter mass $m_{DM}$. Since we now have a gas, we let $m_{MD} \rightarrow m_p$, which is the proton mass. Thus we have
+\begin{equation}
+\rho = \dfrac{A}{r^2} = \dfrac{k_b T}{2\pi G m_p r^2}.
+\end{equation}
+We when use that for an isothermal gas the pressure is given as
+
+\begin{equation}
+p = \dfrac{k_b T}{m_p}\rho = \dfrac{k_b T A}{m_p r^2}.
+\end{equation}
+
+We can now take the differentiation of this with respect to $r$ and use \eqref{eq:mass} and \eqref{eq:ansatz} to find
+\begin{equation}
+\frac{dp}{dr} = -\dfrac{2 k_b T A}{m_p r^3} =  -\dfrac{2 k_b T}{m_p r^3} \cdot \dfrac{M(<r)}{4\pi r} = - \frac{GM(<r)}{r^2}\dfrac{k_b T}{2\pi G m_p r^2} =  - \dfrac{GM(<r)\rho}{r^2}.
+\end{equation}
+
+This is the same as for the gas in hydrostatic equilibrium from \eqref{eq:dp}.
+
+
+
+\end{document}
+
