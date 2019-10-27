@@ -129,6 +129,149 @@ We can now take the differentiation of this with respect to $r$ and use \eqref{e
 
 This is the same as for the gas in hydrostatic equilibrium from \eqref{eq:dp}.
 
+\section{Exercise 3}
+\subsection{a)}
+We have that for cusp density profile
+
+\begin{equation}
+\rho^{cusp}(r) =
+\left\{
+	\begin{array}{ll}
+		\rho_0\left(\dfrac{r}{r_s}\right)^{-1}  & \mbox{if } r < r_s \\
+		\rho_0\left(\dfrac{r}{r_s}\right)^{-3} & \mbox{if } r \geq r_s
+	\end{array}
+\right.
+\end{equation}
+
+And for the cored profile, we have
+
+\begin{equation}
+\rho^{cusp}(r) =
+\left\{
+	\begin{array}{ll}
+		\rho_0  & \mbox{if } r < r_s \\
+		\rho_0\left(\dfrac{r}{r_s}\right)^{-3} & \mbox{if } r \geq r_s
+	\end{array}
+\right.
+\end{equation}
+
+The mass of a spherical symmetric system can be written as 
+
+\begin{equation}
+M(<r) = 4\pi \int_0^r \rho(r') r'^2 dr'.
+\end{equation}
+So for $r<r_s$ we get
+
+\begin{equation}
+M^{cusp}(<r) = 4\pi \int_0^r \rho_0\left(\dfrac{r'}{r_s}\right)^{-1} r'^2 dr' = 4\pi r_s \rho_0 \int_0^r r' dr'  = 2\pi r_s \rho_0 r^2,
+\end{equation}
+and
+
+\begin{equation}
+M^{core}(<r) = 4\pi \int_0^r \rho_0 r'^2 dr' = \dfrac{4}{3}\pi \rho_0 r^3. 
+\end{equation}
+
+For $r\geq r_s$ we integrate from $r_s$ to $r$ and include all the mass that was within $r_s$, so
+\begin{equation}
+M^{cusp}(<r) = M(<r_s) + 4\pi \int_{r_s}^r \rho_0\left(\dfrac{r'}{r_s}\right)^{-3} r'^2 dr' = M(<r_s) +  4\pi r_s^3 \rho_0 \int_0^r r'^{-1} dr'  
+\end{equation}
+\begin{equation}
+= M(<r_s) +  4\pi r_s^3 \rho_0 \ln r \big|_{r_s}^r = 2\pi r_s \rho_0 r_s^2 + 4\pi r_s^3 \rho_0 (\ln r - \ln r_s),
+\end{equation}
+and similarly for the core mass
+\begin{equation}
+M^{core}(<r) = M^{core}(<r_s) + 4\pi \int_{r_s}^r \rho_0\left(\dfrac{r'}{r_s}\right)^{-3} r'^2 dr' = \dfrac{4}{3}\pi \rho_0 r_s^3 + 4\pi r_s^3 \rho_0 (\ln r - \ln r_s).
+\end{equation}
+
+So we get that
+
+\begin{equation}
+M^{cusp}(<r) =
+\left\{
+	\begin{array}{ll}
+		2\pi r_s \rho_0 r^2  & \mbox{if } r < r_s \\
+		2\pi  \rho_0 r_s^3 + 4\pi r_s^3 \rho_0 (\ln r - \ln r_s) & \mbox{if } r \geq r_s
+	\end{array}
+\right.
+\end{equation}
+
+and 
+
+\begin{equation}
+M^{core}(<r) =
+\left\{
+	\begin{array}{ll}
+		\dfrac{4}{3}\pi \rho_0 r^3  & \mbox{if } r < r_s \\
+		\dfrac{4}{3}\pi \rho_0 r_s^3 + 4\pi r_s^3 \rho_0 (\ln r - \ln r_s) & \mbox{if } r \geq r_s
+	\end{array}
+\right.
+\end{equation}
+
+\subsection{b)}
+
+We get the gravitation potential energy by integrating over the energies felt by a small shall of mass from the mass inside it. First we get the energy of one such shell
+
+\begin{equation}
+dW(r) = -\frac{GM(<r)m_{shell}}{r_{shell}} = -4\pi G M(<r) \dfrac{\rho r_{shell}^2 dr}{r_{shell}} = -4\pi G M(<r) \rho r_{shell} dr,
+\end{equation}
+where we have used that 
+\begin{equation}
+m_{shell} = \rho V_{shell} = 4\pi \rho r_{shell}^2 dr.
+\end{equation}
+Thus the gravitational potential energy is
+\begin{equation}
+W = \int_0^{r_{vir}} dW = -4\pi G \int_0^{r_{vir}} M(<r) \rho(r) r dr.
+\end{equation}
+
+
+\subsection{c)}
+We can now find the minimal energy needed to form the cored profile, given as 
+\begin{equation}
+\Delta E = \dfrac{W^{core} - W^{cusp}}{2} = -2\pi G\int_0^{r_{vir}} \left(\rho^{core}M^{core}(<r) - \rho^{cusp}M^{cusp}(<r)\right) r dr
+\end{equation}
+We split this into two parts. First we look at $r=0$ to $r_s$
+\begin{equation}
+-2\pi G \int_0^{r_{s}} \left(\rho^{core}M^{core}(<r) - \rho^{cusp}M^{cusp}(<r)\right) r dr = -2\pi G\int_0^{r_{s}} \left(\rho_0\dfrac{4}{3}\pi \rho_0 r^3 - \rho_0\left(\dfrac{r}{r_s}\right)^{-1}2\pi r_s \rho_0 r^2\right) r dr 
+\end{equation}
+\begin{equation}
+= -2\pi^2G \rho_0^2 \int_0^{r_{s}}( \frac{4}{3}r^4 - 2r^2 r_s^2)dr = -2\pi^2G \rho_0^2 ( \frac{4}{15}r_s^5 - \frac{2}{3} r_s^5) = \frac{4}{5}\pi^2G \rho_0^2 r_s^5.
+\end{equation}
+
+We then look from $r_s$ to $r_{vir}$
+\begin{equation}
+-2\pi G \int_{r_s}^{r_{vir}} \left(\rho^{core}M^{core}(<r) - \rho^{cusp}M^{cusp}(<r)\right) r dr 
+\end{equation}
+\begin{equation}
+= -2\pi G \int_{r_s}^{r_{vir}} \left(\rho_0\left(\dfrac{r}{r_s}\right)^{-3}\left( \dfrac{4}{3}\pi \rho_0 r_s^3 + 4\pi r_s^3 \rho_0 (\ln r - \ln r_s)\right) -  \rho_0\left(\dfrac{r}{r_s}\right)^{-3}\left(2\pi  \rho_0 r_s^3 +  4\pi r_s^3 \rho_0 (\ln r - \ln r_s)\right) \right)r dr 
+\end{equation}
+
+\begin{equation}
+= -2\pi G \int_{r_s}^{r_{vir}} \left(\rho_0\left(\dfrac{r}{r_s}\right)^{-3}\left( \dfrac{4}{3}\pi \rho_0 r_s^3)\right) -  \rho_0\left(\dfrac{r}{r_s}\right)^{-3}\left(2\pi \rho_0 r_s^3 \right) \right)r dr
+\end{equation}
+\begin{equation}
+= 2\pi^2 G \rho_0^2 r_s^6 \int_{r_s}^{r_{vir}} \frac{1}{r^2} \frac{2}{3} dr = \frac{4}{3}\pi^2 G \rho_0^2 r_s^6 \frac{-1}{1}\left(r_{vir}^{-1} - r_s^{-1}\right) \approx \frac{4}{3}\pi^2 G \rho_0^2 r_s^5,
+\end{equation}
+where the last step is because $r_s << r_{vir}$. We then get
+
+\begin{equation}
+\Delta E = \frac{4}{5}\pi^2 \rho_0^2 G r_s^5 + \frac{4}{3}\pi^2 G \rho_0^2 r_s^5 = \frac{32}{15}\pi^2 G \rho_0^2 r_s^5.
+\end{equation}
+
+\subsection{d)}
+We are now looking at a dwarf galaxy at $z=0$ with $M_{vir} = 3\cdot10^{10}M_{\odot}$ and $R_{vir} = 45$ kpc, with $r_s = 1$ kpc. With this mass and radius, we can find
+
+\begin{equation}
+\rho_0 = \dfrac{M_{vir}}{4/3 r_{s}^3 \pi + 4\pi r_s^3(\ln R_{vir} - \ln r_s)} = 6.13\cdot10^{-23} \text{g cm}^{-3}.
+\end{equation}
+
+This gives us that
+
+\begin{equation}
+\Delta E = \frac{32}{15}\pi^2 G \rho_0^2 r_s^5 = 1.477\cdot 10^{57} \text{ergs}.
+\end{equation}
+\todo{Check this!!!}
+
+\subsection{e)}
 
 
 \end{document}
