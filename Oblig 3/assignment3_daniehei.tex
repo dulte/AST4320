@@ -45,6 +45,82 @@
 \begin{document}
 \maketitle
 
+\section{1}
+\subsection{a)}
+
+To find the mean molecular weight if the intergalactic medium (IGM) we use that
+\begin{equation}
+\dfrac{1}{\mu} = \sum_i \dfrac{X_i}{A_i} = 2X + 4/3\cdot Y,
+\end{equation}
+where $X_i$ is the fraction of species $i$ and $A_i$ is the atomic mass of said species divided by the total number of particles it ionizes to. For the IGM we have a fraction of hydrogen $X = 0.76$ and a fraction of helium $Y = 0.24$, giving us
+
+\begin{equation}
+\mu = \dfrac{1}{2\cdot0.76 + 4/3\cdot0.24} = 0.59.
+\end{equation}
+
+\subsection{b)}
+The Jeans length is given as 
+
+\begin{equation}
+\lambda_j = c_s\left(\dfrac{\pi}{G\rho}\right)^{1/2},
+\end{equation}
+where the speed of sound $c_s$ for a gas is given as
+\begin{equation}
+c_s = \sqrt{\dfrac{k_b T}{\mu m_p}} = 11.83 \text{m/s}.
+\end{equation}
+We are using that $T=10^4$ K. We have to find the pressure of the IGM. For this we assume that the gas only have baryonic matter, so
+\begin{equation}
+\rho = \rho_b(1+z)^3 = \Omega_b \rho_c (1+z)^3,
+\end{equation}
+where $\Omega_b = 0.049$ and $\rho_c = 9.47\cdot 10^{-27}$ g/cm$^{3}$. 
+We then see that get
+\begin{equation}
+\lambda_j(z) = 3.9\text{ Mpc}\cdot(1+z)^{-3/2}.
+\end{equation}
+This gives $k$
+
+\begin{equation}
+k = \dfrac{2\pi}{\lambda_j(z)} = 1.61 \text{ Mpc}^{-1} (1+z)^{3/2}.
+\end{equation}
+
+\subsection{c)}
+We can use Hubble's law to find the different in velocity across the Jeans length of the IGM, thereby giving us the velocity width. Through Hubble's law we get
+
+\begin{equation}
+\Delta v = H(z) \lambda_j,
+\end{equation}
+where
+\begin{equation}
+H(z) = H_0 (\Omega_m(1+z)^3 + \Omega_r(1+z)^4 + \Omega_{\Lambda})^{1/2}.
+\end{equation}
+
+This gives us that
+
+\begin{equation}
+\Delta v = H_0 (\Omega_m(1+z)^3 + \Omega_r(1+z)^4 + \Omega_{\Lambda})^{1/2}3.9\text{ Mpc}\cdot(1+z)^{-3/2} 
+\end{equation}
+\begin{equation}
+= 264.5 \text{ km/s}\cdot (\Omega_m + \Omega_r(1+z) + \Omega_{\Lambda}(1+z)^{-3})^{1/2} = 264.5 \text{ km/s}\cdot (0.308 +  0.692(1+z)^{-3})^{1/2}
+\end{equation}
+
+
+\subsection{d)}
+
+\todo{See over this!} 
+
+\subsection{e)}
+
+The thermal broadening scale is given as
+
+\begin{equation}
+ v_{th} = \sqrt{\dfrac{2k_b T}{m_p}},
+ \end{equation} 
+where $T = 10^4$ K. This gives us
+\begin{equation}
+v_{th} = 12.85 \text{ km/s},
+\end{equation}
+which is an order small that all values of $z$.
+
 \section{Exercise 2}
 
 We would like to find the optical depth $\tau_e$ of the IGM as a function of redshift $z$. The optical depth is given as
